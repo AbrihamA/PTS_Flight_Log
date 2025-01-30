@@ -1,32 +1,188 @@
 <!DOCTYPE html>
-
-<html lang="en">
-
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-<title>PTS_Flight_LOG</title>
-  <style>
- 
-   body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
-    iframe {
-      width: 100%;
-      height: 100vh;
-      border: none;
-    }
-  </style>
+    <title>Data Collection Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        form {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        fieldset {
+            border: 2px solid #007BFF;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: #f9f9f9;
+        }
+        legend {
+            font-weight: bold;
+            color: #007BFF;
+            padding: 5px 10px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: white;
+        }
+        input[type="submit"] {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 12px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        input[type="submit"]:hover {
+            background-color: #218838;
+        }
+    </style>
 </head>
 <body>
-  <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSc5Ltze9oXOmi-Ekt_PjKd-bYN4ssWW8G1xRAzKDZ0NxyKtdA/viewform?embedded=true" width="640" height="3029" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+    <h2>PTS Equipment Utilization Form</h2>
+    
+    <nav>
+        <button onclick="showForm('flight_log')">Flight Log</button>
+        <button onclick="showForm('cancellation')">Cancellations</button>
+    </nav>
+    
+    <div id="flight-log-form" style="display:block;">
+        <form action="submit_form.php" method="post">
+            <fieldset>
+                <legend>General Information</legend>
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" required>
+                
+                <label for="station">Station:</label>
+                <select id="station" name="station" required>
+                    <option value="ADD">ADD</option>
+                    <option value="AWA">AWA</option>
+                    <option value="DIR">DIR</option>
+                    <option value="JIJ">JIJ</option>
+                    <option value="JIM">JIM</option>
+                    <option value="BJR">BJR</option>
+                    <option value="AMH">AMH</option>
+                    <option value="MQX">MQX</option>
+                </select>
+                
+                <label for="flight_type">Flight Type:</label>
+                <input type="text" id="flight_type" name="flight_type">
+            </fieldset>
+
+            <fieldset>
+                <legend>Resources</legend>
+                <label for="resource_type">Resource Type:</label>
+                <select id="resource_type" name="resource_type" required>
+                    <option value="AC">AC</option>
+                    <option value="FTD">FTD</option>
+                </select>
+                
+                <label for="equipment">Equipment Type:</label>
+                <select id="equipment" name="equipment" required>
+                    <option value="C172">C172</option>
+                    <option value="DA40">DA40</option>
+                    <option value="DA42">DA42</option>
+                </select>
+                
+                <label for="equipment_callsign">Equipment Call Sign:</label>
+                <input type="text" id="equipment_callsign" name="equipment_callsign">
+            </fieldset>
+
+            <fieldset>
+                <legend>Instructor Information</legend>
+                <label for="ip_position">IP Position:</label>
+                <select id="ip_position" name="ip_position" required>
+                    <option value="Head PTS">Head PTS</option>
+                    <option value="Asst.Head PTS">Asst.Head PTS</option>
+                    <option value="Asst.Head PTS AWA">Asst.Head PTS AWA</option>
+                    <option value="Chief FL.In">Chief FL.In</option>
+                    <option value="A/Chief FL.In">A/Chief FL.In</option>
+                    <option value="Sr.FL.IN">Sr.FL.IN</option>
+                    <option value="Fl.In">Fl.In</option>
+                    <option value="Jr.Fl.In">Jr.Fl.In</option>
+                    <option value="Ass.Fl.In">Ass.Fl.In</option>
+                </select>
+                
+                <label for="ip_callsign">IP Call Sign:</label>
+                <input type="text" id="ip_callsign" name="ip_callsign" required>
+            </fieldset>
+
+            <fieldset>
+                <legend>Student Information</legend>
+                <label for="sp_batch">SP Batch:</label>
+                <input type="text" id="sp_batch" name="sp_batch">
+                
+                <label for="sp_callsign">SP Call Sign:</label>
+                <input type="text" id="sp_callsign" name="sp_callsign">
+            </fieldset>
+
+            <fieldset>
+                <legend>Flight Details</legend>
+                <label for="lesson_type">Lesson Type:</label>
+                <input type="text" id="lesson_type" name="lesson_type">
+                
+                <label for="flight_duration">Actual Duration:</label>
+                <input type="text" id="flight_duration" name="flight_duration">
+            </fieldset>
+
+            <fieldset>
+                <legend>Remarks</legend>
+                <label for="reason_for_difference">Reason for Scheduled Vs Actual Flight Duration Difference:</label>
+                <input type="text" id="reason_for_difference" name="reason_for_difference">
+                
+                <label for="reason_aborted_cancelled">Reason if Aborted/Cancelled:</label>
+                <input type="text" id="reason_aborted_cancelled" name="reason_aborted_cancelled">
+                        <fieldset>
+                <legend>Student Grade</legend>
+                <label for="student_grade">Student Grade:</label>
+                <input type="number" id="student_grade" name="student_grade">
+            </fieldset>
+
+            </fieldset>
+            
+            <input type="submit" value="Submit">
+        </form>
+    </div>
 </body>
 </html>
