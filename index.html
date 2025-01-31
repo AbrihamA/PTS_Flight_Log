@@ -1,7 +1,11 @@
+To make the `index.html` file mobile-friendly, you can add a viewport meta tag and use CSS media queries. Here's the updated code:
+
+```html
 <!DOCTYPE html>
 <html>
 <head>
     <title>Data Collection Form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -76,6 +80,19 @@
         }
         input[type="submit"]:hover {
             background-color: #218838;
+        }
+
+        /* Media queries for mobile responsiveness */
+        @media (max-width: 600px) {
+            nav {
+                flex-direction: column;
+                align-items: center;
+            }
+            button {
+                width: 100%;
+                margin-bottom: 10px;
+                font-size: 14px;
+            }
         }
     </style>
 </head>
@@ -173,12 +190,11 @@
                 
                 <label for="reason_aborted_cancelled">Reason if Aborted/Cancelled:</label>
                 <input type="text" id="reason_aborted_cancelled" name="reason_aborted_cancelled">
-                        <fieldset>
-                <legend>Student Grade</legend>
-                <label for="student_grade">Student Grade:</label>
-                <input type="number" id="student_grade" name="student_grade">
-            </fieldset>
-
+                <fieldset>
+                    <legend>Student Grade</legend>
+                    <label for="student_grade">Student Grade:</label>
+                    <input type="number" id="student_grade" name="student_grade">
+                </fieldset>
             </fieldset>
             
             <input type="submit" value="Submit">
@@ -186,3 +202,8 @@
     </div>
 </body>
 </html>
+```
+
+This update includes:
+- Adding the viewport meta tag for proper scaling on mobile devices.
+- Using CSS media queries to adjust the layout for smaller screen sizes.
