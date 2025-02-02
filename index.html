@@ -96,23 +96,26 @@ To make the `index.html` file mobile-friendly, you can add a viewport meta tag a
         }
     </style>
     <script>
-        function calculateDuration() {
-            const timeIn = document.getElementById('time_in').value;
-            const timeOut = document.getElementById('time_out').value;
-            if (timeIn && timeOut) {
-                const [hoursIn, minutesIn] = timeIn.split(':').map(Number);
-                const [hoursOut, minutesOut] = timeOut.split(':').map(Number);
-                const dateIn = new Date();
-                const dateOut = new Date();
-                dateIn.setHours(hoursIn, minutesIn);
-                dateOut.setHours(hoursOut, minutesOut);
-                const diffMs = dateOut - dateIn;
-                const diffHrs = Math.floor(diffMs / (1000 * 60 * 60));
-                const diffMins = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
-                document.getElementById('flight_duration').value = `${diffHrs}h ${diffMins}m`;
+    function calculateDuration() {
+        const timeIn = document.getElementById('time_in').value;
+        const timeOut = document.getElementById('time_out').value;
+        if (timeIn && timeOut) {
+            const [hoursIn, minutesIn] = timeIn.split(':').map(Number);
+            const [hoursOut, minutesOut] = timeOut.split(':').map(Number);
+            const dateIn = new Date();
+            const dateOut = new Date();
+            dateIn.setHours(hoursIn, minutesIn);
+            dateOut.setHours(hoursOut, minutesOut);
+            let diffMs = dateOut - dateIn;
+            if (diffMs < 0) {
+                diffMs += 24 * 60 * 60 * 1000; // Add 24 hours in milliseconds
             }
+            const diffHrs = Math.floor(diffMs / (1000 * 60 * 60));
+            const diffMins = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+            document.getElementById('flight_duration').value = `${diffHrs}h ${diffMins}m`;
         }
-    </script>
+    }
+</script>
 </head>
 <body>
     <h2>PTS Equipment Utilization Form</h2>
