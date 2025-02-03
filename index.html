@@ -16,10 +16,11 @@
         }
         nav {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
             background-color: #007BFF;
             padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         .nav-links {
             display: flex;
@@ -28,11 +29,16 @@
         .nav-links a {
             color: white;
             text-decoration: none;
-            padding: 10px;
+            padding: 10px 20px;
+            background-color: #0056b3;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
         }
         .nav-links a:hover {
-            background-color: #0056b3;
-            border-radius: 5px;
+            background-color: #004080;
         }
         .menu-toggle {
             display: none;
@@ -54,11 +60,12 @@
             color: white;
             text-decoration: none;
             padding: 10px;
-            background-color: #007BFF;
+            background-color: #0056b3;
             border-radius: 5px;
+            transition: background-color 0.3s ease;
         }
         .menu a:hover {
-            background-color: #0056b3;
+            background-color: #004080;
         }
         button {
             padding: 10px 20px;
@@ -68,6 +75,7 @@
             cursor: pointer;
             border-radius: 5px;
             font-size: 16px;
+            transition: background-color 0.3s ease;
         }
         button:hover {
             background-color: #0056b3;
@@ -114,6 +122,7 @@
             padding: 12px;
             width: 100%;
             margin-top: 20px;
+            transition: background-color 0.3s ease;
         }
         input[type="submit"]:hover {
             background-color: #218838;
@@ -123,7 +132,7 @@
         @media (max-width: 600px) {
             nav {
                 flex-direction: column;
-                align-items: flex-start;
+                align-items: center;
             }
             .nav-links {
                 display: none;
@@ -132,7 +141,7 @@
             }
             .nav-links a {
                 width: 100%;
-                text-align: left;
+                text-align: center;
             }
             .menu-toggle {
                 display: flex;
