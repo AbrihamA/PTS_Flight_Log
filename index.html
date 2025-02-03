@@ -1,6 +1,4 @@
-To make the `index.html` file mobile-friendly, you can add a viewport meta tag and use CSS media queries. Here's the updated code:
 
-```html
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,9 +17,49 @@ To make the `index.html` file mobile-friendly, you can add a viewport meta tag a
         }
         nav {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #007BFF;
+            padding: 10px;
+        }
+        .nav-links {
+            display: flex;
             gap: 20px;
-            margin-bottom: 20px;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+        }
+        .nav-links a:hover {
+            background-color: #0056b3;
+            border-radius: 5px;
+        }
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        .menu-toggle div {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 4px 0;
+        }
+        .menu {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .menu a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            background-color: #007BFF;
+            border-radius: 5px;
+        }
+        .menu a:hover {
+            background-color: #0056b3;
         }
         button {
             padding: 10px 20px;
@@ -86,12 +124,22 @@ To make the `index.html` file mobile-friendly, you can add a viewport meta tag a
         @media (max-width: 600px) {
             nav {
                 flex-direction: column;
-                align-items: center;
+                align-items: flex-start;
             }
-            button {
+            .nav-links {
+                display: none;
+                flex-direction: column;
                 width: 100%;
-                margin-bottom: 10px;
-                font-size: 14px;
+            }
+            .nav-links a {
+                width: 100%;
+                text-align: left;
+            }
+            .menu-toggle {
+                display: flex;
+            }
+            .menu {
+                display: flex;
             }
         }
     </style>
@@ -115,17 +163,30 @@ To make the `index.html` file mobile-friendly, you can add a viewport meta tag a
             document.getElementById('flight_duration').value = `${diffHrs}h ${diffMins}m`;
         }
     }
-</script>
+
+    function toggleMenu() {
+        const navLinks = document.querySelector('.nav-links');
+        navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+    }
+    </script>
 </head>
 <body>
     <h2>PTS Equipment Utilization Form</h2>
     
     <nav>
-        <button onclick="showForm('flight_log')">Flight Log</button>
-        <button onclick="showForm('cancellation')">Cancellations</button>
+        <div class="menu-toggle" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="nav-links">
+            <a href="#" onclick="showForm('training_flights')">Training Flights (MPL/CPL)</a>
+            <a href="#">IP Flights (PL/IDP/Currency)</a>
+            <a href="#">Ferry/Test flights</a>
+        </div>
     </nav>
     
-    <div id="flight-log-form" style="display:block;">
+    <div id="training-flights-form" style="display:block;">
         <form action="submit_form.php" method="post">
             <fieldset>
                 <legend>General Information</legend>
@@ -237,8 +298,3 @@ To make the `index.html` file mobile-friendly, you can add a viewport meta tag a
     </div>
 </body>
 </html>
-```
-
-This update includes:
-- Adding the viewport meta tag for proper scaling on mobile devices.
-- Using CSS media queries to adjust the layout for smaller screen sizes.
