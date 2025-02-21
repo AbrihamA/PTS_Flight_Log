@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Training Flights (MPL/CPL)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #576174;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            background-color: #647180;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        .nav-links a:hover {
+            background-color: #e1e6eb;
+        }
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        .nav-toggle span {
+            background-color: white;
+            height: 2px;
+            width: 25px;
+            margin: 4px;
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+            }
+            .nav-links a {
+                text-align: center;
+                padding: 10px;
+                width: 100%;
+                border-radius: 0;
+            }
+            .nav-toggle {
+                display: flex;
+            }
+        }
+        form {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        fieldset {
+            border: 2px solid #21262b;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: #f9f9f9;
+        }
+        legend {
+            font-weight: bold;
+            color: #343638;
+            padding: 5px 10px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: white;
+        }
+        input[type="submit"] {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 12px;
+            width: 100%;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+        input[type="submit"]:hover {
+            background-color: #218838;
+        }
+    </style>
+    <script src="ipData.js"></script>
+    <script src="populateIPList.js"></script>
+    <script src="autofillIPDetails.js"></script>
+    <script src="updateEquipmentCallSign.js"></script>	
+    <script src="eqData.js"></script>
+    <script src="calculateDuration.js"></script>
+    <script src="trData.js"></script>
+    <script src="traineefunctions.js"></script>
+	<script src="syData.js"></script>
+	<script src="updateSyllabus.js"></script>
+	<script src="updateTraineeGrade.js"></script>
+	
+
+
+ <script>
+     function toggleNav() {
+        const navLinks = document.querySelector('.nav-links');
+        navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+     }
+
+     function toggleReasonAborted() {
+    let flightStatus = document.getElementById("flight_status").value;
+    let reasonAborted = document.getElementById("reason_aborted");
+    
+    if (flightStatus === "aborted") {
+        reasonAborted.required = true;
+        reasonAborted.disabled = false;
+    } else {
+        reasonAborted.required = false;
+        reasonAborted.disabled = true;
+        reasonAborted.value = ""; // Clear the selection when not needed
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("flight_status").addEventListener("change", toggleReasonAborted);
+    toggleReasonAborted(); // Initialize state on page load
+});
+
+</script>
+</head>
+<body>
+    <nav>
+        <div class="nav-toggle" onclick="toggleNav()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="training_flights.html">Training Flights (MPL/CPL/PPL/IDP/ZFT/SP-CURRENCY)</a>
+            <a href="ip_flights.html">IP Flights (PL/STD/IP-CURRENCY/FERRY/TEST/SCREENING</a>
+        </div>
+    </nav>
+    <form action="submit_form.php" method="post">
+        <fieldset>
+            <legend>General Information</legend>
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required>
+            
+            <label for="station">Station:</label>
+            <select id="station" name="station" required>
+                <option value="ADD">Select Station</option>
+                <option value="ADD">ADD</option>
+                <option value="AWA">AWA</option>
+                <option value="DIR">DIR</option>
+                <option value="JIJ">JIJ</option>
+                <option value="JIM">JIM</option>
+                <option value="BJR">BJR</option>
+                <option value="AMH">AMH</option>
+                <option value="MQX">MQX</option>
+            </select>
+            
+            <label for="flight_type">Flight Type:</label>
+            <select id="flight_type" name="flight_type">
+                <option value="dual">Dual</option>
+                <option value="solo">Solo</option>
+            </select>
+            <label for="flight_status">Flight Status:</label>
+            <select id="flight_status" name="flight_status">
+                <option value="completed">Completed</option>
+                <option value="aborted">Aborted</option>
+            </select>
+            
+            <label for="reason_aborted">Reason if Aborted:</label>
+            <select id="reason_aborted" name="reason_aborted">
+                <option value="">Select Reason</option>
+                <option value="A/C Remark">A/C Remark</option>
+                <option value="Weather">Weather</option>
+                <option value="Bird movement">Bird movement</option>
+                <option value="Airport Issues">Airport Issues</option>
+                <option value="Commercial/Military a/c">Commercial/Military a/c</option>
+                <option value="IP/SP sick">IP/SP sick</option>
+                <option value="Incident">Incident</option>
+                <option value="ATC instruction">ATC instruction</option>
+                <option value="Other">Other</option>
+            </select>
+            
+            
+            <label for="time_in">Time In:</label>
+            <input type="time" id="time_in" name="time_in" required onchange="calculateDuration()">
+            
+            <label for="time_out">Time Out:</label>
+            <input type="time" id="time_out" name="time_out" required onchange="calculateDuration()">
+            
+            <label for="flight_duration">Actual Duration:</label>
+            <input type="text" id="flight_duration" name="flight_duration" readonly>
+
+            <label for="reason_for_difference">Reason for Scheduled Vs Actual Flight Duration Difference (if +/- 15 mins):</label>
+            <select id="reason_for_difference" name="reason_for_difference">
+                <option value="">Select Reason</option>
+                <option value="Traffic">Traffic</option>
+                <option value="Weather">Weather</option>
+                <option value="Emergency">Emergency</option>
+                <option value="ATC instruction">ATC instruction</option>
+                <option value="Airport issues">Airport issues</option>
+                <option value="Bird movement">Bird movement</option>
+                <option value="Commercial/Military a/c">Commercial/Military a/c</option>
+                <option value="Other">Other</option>
+            </select>
+            
+        </fieldset>
+
+        <fieldset>
+            <legend>Resources</legend>
+            <label for="resource_type">Resource Type:</label>
+            <select id="resource_type" name="resource_type" required onchange="updateEquipmentCallSign() ; updateSyllabusDropdown();">
+                <option value="">Select Resource Type</option>
+                <option value="AC">Aircraft (AC)</option>
+                <option value="FTD">Flight Training Device (FTD)</option>
+            </select>
+            
+            <label for="equipment">Equipment Type:</label>
+            <select id="equipment" name="equipment" required onchange="updateEquipmentCallSign()">
+                <option value="">Select Equipment Type</option>
+                <option value="C172">C172</option>
+                <option value="DA40">DA40</option>
+                <option value="DA42">DA42</option>
+            </select>
+            
+            <label for="equipment_callsign">Equipment Call Sign:</label>
+            <select id="equipment_callsign" name="equipment_callsign" required>
+                <option value="">Select Call Sign</option>
+            </select>
+        </fieldset>
+
+        <fieldset>
+            <legend>Instructor Information</legend>
+            <label for="ip_id">IP ID:</label>
+            <select id="ip_id" name="ip_id" required onchange="autofillIPDetails()">
+                
+            </select>
+
+            <label for="ip_name">IP Name:</label>
+            <input type="text" id="ip_name" name="ip_name" readonly required>
+
+            <label for="ip_callsign">IP Call Sign:</label>
+            <input type="text" id="ip_callsign" name="ip_callsign" readonly required>
+
+            <label for="ip_position">IP Position:</label>
+            <input type="text" id="ip_position" name="ip_position" readonly required>
+        </fieldset>
+        <fieldset>
+            <legend>Trainee Information</legend>
+        
+            <label for="trainee_program">Trainee Program:</label>
+            <select id="trainee_program" name="trainee_program" onchange="updateBatches(); updateSyllabusDropdown();">
+                <option value="">Select Program</option>
+                <option value="MPL">MPL</option>
+                <option value="CPL">CPL</option>
+                <option value="PPL">PPL</option>
+                <option value="IDP">IDP</option>
+            </select>
+        
+            <label for="trainee_batch">Trainee Batch:</label>
+            <select id="trainee_batch" name="trainee_batch" onchange="updateCallSigns()">
+                <option value="">Select Batch</option>
+            </select>
+        
+            <label for="trainee_callsign">Trainee Call Sign:</label>
+            <select id="trainee_callsign" name="trainee_callsign" onchange="updateTraineeDetails()">
+                <option value="">Select Call Sign</option>
+            </select>
+        
+            <label for="trainee_id">Trainee ID:</label>
+            <input type="text" id="trainee_id" name="trainee_id" readonly>
+        
+            <label for="trainee_name">Trainee Name:</label>
+            <input type="text" id="trainee_name" name="trainee_name" readonly>
+        </fieldset>
+        
+
+        <fieldset>
+            <legend>Lesson Details</legend>
+            <label for="lesson_type">Lesson Type:</label>
+            <select id="lesson_type" name="lesson_type" onchange="updateSyllabusDropdown(); updateTraineeGrade();" >
+                <option value="">Select lesson type</option>
+                <option value="Syllubus">Syllubus</option>
+                <option value="Currency">Currency</option>
+                <option value="ZFT">ZFT</option>
+            </select>
+            <label for="syllubus_no">Syllubus No.:</label>
+            <select id="syllubus_no" name="syllubus_no">
+                <option value="">Select Syllubus No.</option>
+            </select>
+            <label for="trainee_grade">Trainee Grade:</label>
+            <select id="trainee_grade" name="trainee_grade">
+                <option value="">Select Grade</option>
+                
+            </select>
+            
+
+        </fieldset> 
+                      
+        <input type="submit" value="Submit">
+    </form>
+	
+
+</body>
+</html>
